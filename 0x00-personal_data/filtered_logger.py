@@ -34,7 +34,7 @@ class RedactingFormatter(logging.Formatter):
         """After redacting `fields` in the `record`'s message,
         formats the specified record as text."""
         record.msg = filter_datum(
-            self.fields, self.REDACTION, record.getMessage(), self.SEPARATOR
+            self.fields, self.REDACTION, record.msg, self.SEPARATOR
             )
         return super().format(record)
 
