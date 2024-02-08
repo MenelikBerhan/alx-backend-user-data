@@ -39,40 +39,41 @@ class RedactingFormatter(logging.Formatter):
         return super().format(record)
 
 
-# def get_logger() -> logging.Logger:
-#     """Creates and returns a `Logger` instance."""
-#     # create a logger called `user_data` with `INFO` log level
-#     logger = logging.Logger('user_data', logging.INFO)
-# logger.propagate = False    # prevent propagation of msgs to other loggers
-
-#     # create a stream handler and set leve & formatter
-#     stream_handler = logging.StreamHandler()
-#     stream_handler.setLevel(logging.INFO)
-#     stream_handler.setFormatter(RedactingFormatter(fields=list(PII_FIELDS)))
-
-#     # add stream handler to logger and return
-#     logger.addHandler(stream_handler)
-#     return logger
-
-
 def get_logger() -> logging.Logger:
-    """The logger should be named "user_data" and only log up to logging.INFO
-    level. It should not propagate messages to other loggers.
-    It should have a StreamHandler with RedactingFormatter as formatter
+    """Creates and returns a `Logger` instance."""
+    # create a logger called `user_data` with `INFO` log level
+    logger = logging.Logger('user_data', logging.INFO)
+    logger.propagate = False    # prevent propagation of msgs to other loggers
 
-    Returns:
-        logging.Logger:
-    """
-    logger = logging.getLogger("user_data")
-    logger.setLevel(logging.INFO)
-    logger.propagate = False
-
+    # create a stream handler and set log level & formatter
     stream_handler = logging.StreamHandler()
     stream_handler.setLevel(logging.INFO)
-
-    formatter = RedactingFormatter(fields=list(PII_FIELDS))
+    formatter = RedactingFormatter(list(PII_FIELDS))
     stream_handler.setFormatter(formatter)
 
+    # add stream handler to logger and return
     logger.addHandler(stream_handler)
-
     return logger
+
+
+# def get_logger() -> logging.Logger:
+#     """The logger should be named "user_data" and only log up to logging.INFO
+#     level. It should not propagate messages to other loggers.
+#     It should have a StreamHandler with RedactingFormatter as formatter
+
+#     Returns:
+#         logging.Logger:
+#     """
+#     logger = logging.getLogger("user_data")
+#     logger.setLevel(logging.INFO)
+#     logger.propagate = False
+
+#     stream_handler = logging.StreamHandler()
+#     stream_handler.setLevel(logging.INFO)
+
+#     formatter = RedactingFormatter(fields=list(PII_FIELDS))
+#     stream_handler.setFormatter(formatter)
+
+#     logger.addHandler(stream_handler)
+
+#     return logger
