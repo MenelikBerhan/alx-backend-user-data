@@ -54,3 +54,6 @@ def get_logger() -> logging.Logger:
     # add stream handler to logger and return
     logger.addHandler(stream_handler)
     return logger
+
+
+# test
