@@ -6,7 +6,7 @@ import logging
 # from mysql.connector.connection import MySQLConnection
 import mysql.connector
 import re
-from os import environ
+import os
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
@@ -64,10 +64,10 @@ def get_db() -> mysql.connector.MySQLConnection:
     user name, password and host are read from environment variables."""
     try:
         return mysql.connector.connect(
-            user=environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
-            password=environ.get('PERSONAL_DATA_DB_PASSWORD', ''),
-            host=environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
-            database=environ.get('PERSONAL_DATA_DB_NAME')
+            user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+            password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+            host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+            database=os.getenv('PERSONAL_DATA_DB_NAME')
         )
     except mysql.connector.Error:
         return None
