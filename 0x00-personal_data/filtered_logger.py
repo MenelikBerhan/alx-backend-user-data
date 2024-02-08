@@ -58,27 +58,13 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-#     logger = logging.getLogger("user_data")
-#     logger.setLevel(logging.INFO)
-#     logger.propagate = False
-
-#     stream_handler = logging.StreamHandler()
-#     stream_handler.setLevel(logging.INFO)
-
-#     formatter = RedactingFormatter(fields=list(PII_FIELDS))
-#     stream_handler.setFormatter(formatter)
-
-#     logger.addHandler(stream_handler)
-
-#     return logger
-
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """Returns a connector to a mysql database. Database name,
+    """Returns a connection to a mysql database. Database name,
     user name, password and host are read from environment variables."""
     mysql_connection = mysql.connector.connect(
-        user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
-        password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
-        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
-        database=os.getenv('PERSONAL_DATA_DB_NAME', '')
-        )
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        database=os.getenv("PERSONAL_DATA_DB_NAME")
+    )
     return mysql_connection
