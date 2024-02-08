@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Obfuscating log messages using regex substitution.
 """
-from typing import List
+from typing import List, Union
 import logging
-from mysql.connector.connection import MySQLConnection
+# from mysql.connector.connection import MySQLConnection
+import mysql.connector
 import re
 from os import environ
 
@@ -58,12 +59,15 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> MySQLConnection:
+def get_db() -> Union[mysql.connector.MySQLConnection, None]:
     """Returns a connector to a mysql database. Database name,
     user name, password and host are read from environment variables."""
-    return MySQLConnection(
-        user=environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
-        password=environ.get('PERSONAL_DATA_DB_PASSWORD', ''),
-        host=environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
-        database=environ.get('PERSONAL_DATA_DB_NAME')
-    )
+    try:
+        return mysql.connector.MySQLConnection(
+            user=environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
+            password=environ.get('PERSONAL_DATA_DB_PASSWORD', ''),
+            host=environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
+            database=environ.get('PERSONAL_DATA_DB_NAME')
+        )
+    except mysql.connector.Error:
+        return None
