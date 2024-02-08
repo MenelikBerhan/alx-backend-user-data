@@ -58,16 +58,15 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
     return logger
 
-
-def get_db() -> mysql.connector.MySQLConnection:
-    """Returns a connector to a mysql database. Database name,
-    user name, password and host are read from environment variables."""
-    try:
-        return mysql.connector.connect(
-            user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
-            password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
-            host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
-            database=os.getenv('PERSONAL_DATA_DB_NAME')
-        )
-    except mysql.connector.Error:
-        return None
+# def get_db() -> mysql.connector.MySQLConnection:
+#     """Returns a connector to a mysql database. Database name,
+#     user name, password and host are read from environment variables."""
+#     try:
+#         return mysql.connector.connect(
+#             user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+#             password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+#             host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+#             database=os.getenv('PERSONAL_DATA_DB_NAME')
+#         )
+#     except mysql.connector.Error:
+#         return None
