@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Obfuscating log messages using regex substitution.
 """
-from typing import List, Union
+from typing import List
 import logging
 import mysql.connector
 import re
