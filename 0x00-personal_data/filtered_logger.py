@@ -8,7 +8,7 @@ import re
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    """Replaces values of `fields` in `message` with `redaction.
+    """Replaces values of `fields` in `message` with `redaction`.
     Format of each field value pair: <field>=<value><separator>"""
     pattern = r'({})([^{}]*)'.format("|".join(fields), separator)
     replacement = r'\1={}'.format(redaction)
