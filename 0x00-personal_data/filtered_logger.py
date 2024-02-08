@@ -45,10 +45,11 @@ def get_logger() -> logging.Logger:
     logger = logging.Logger('user_data', logging.INFO)
     logger.propagate = False    # prevent propagation of msgs to other loggers
 
-    # create a stream handler and set formatter
+    # create a stream handler and set leve & formatter
     stream_handler = logging.StreamHandler()
+    stream_handler.setLevel = logging.INFO
     stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
-
+    # print(stream_handler.level, logger.level)
     # add stream handler to logger and return
     logger.addHandler(stream_handler)
     return logger
