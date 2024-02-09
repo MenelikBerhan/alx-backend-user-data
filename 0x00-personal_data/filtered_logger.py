@@ -44,7 +44,9 @@ class RedactingFormatter(logging.Formatter):
 def get_logger() -> logging.Logger:
     """Creates and returns a `Logger` instance."""
     # create a logger called `user_data` with `INFO` log level
-    logger = logging.Logger('user_data', logging.INFO)
+    # logger = logging.Logger('user_data', logging.INFO)
+    logger = logging.getLogger('user_data')
+    logger.setLevel(logging.INFO)
     logger.propagate = False    # prevent propagation of msgs to other loggers
 
     # create a stream handler and set log level & formatter
