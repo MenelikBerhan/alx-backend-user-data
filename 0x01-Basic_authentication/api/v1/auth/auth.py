@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Class to manage API Authentication
 """
 from flask import request
