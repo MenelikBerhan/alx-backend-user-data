@@ -36,12 +36,15 @@ class BasicAuth(Auth):
             decoded_base64_authorization_header: str
             ) -> Union[Tuple[str, str], None]:
         """Returns the user email and password from the Base64 decoded value.
-        format of Base64 decoded value: `<user_email>:<password>`"""
+        format of Base64 decoded value: `<user_email>:<password>`. Password
+        could contain the separator `:`, but not the email."""
         if decoded_base64_authorization_header is None or\
             type(decoded_base64_authorization_header) != str or\
-                decoded_base64_authorization_header.count(':') != 1:
+                decoded_base64_authorization_header.count(':') == 0:
             return (None, None)
-        return tuple(decoded_base64_authorization_header.split(':'))
+        separator_index = decoded_base64_authorization_header.index(':')
+        return (decoded_base64_authorization_header[:separator_index],
+                decoded_base64_authorization_header[separator_index + 1:])
 
     def user_object_from_credentials(
             self, user_email: str,
