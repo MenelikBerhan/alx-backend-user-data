@@ -19,10 +19,6 @@ class Auth:
             path += '/'
         # return True if path is not in excluded_paths
         for excl_path in excluded_paths:
-            if excl_path == '*':
-                return False
-            if excl_path == "":
-                continue
             if match(excl_path, path) is not None:
                 return False
         return True
