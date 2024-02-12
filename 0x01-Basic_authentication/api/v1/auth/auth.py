@@ -3,8 +3,6 @@
 from flask import request
 from typing import List, TypeVar
 
-User = TypeVar('User')
-
 
 class Auth():
     """Template for all authentication system in the API.
@@ -17,6 +15,6 @@ class Auth():
         """Extracts the authorize header from request."""
         return None
 
-    def current_user(self, request=None) -> User:
+    def current_user(self, request=None) -> TypeVar('User'):
         """Returns the current user."""
         return None
