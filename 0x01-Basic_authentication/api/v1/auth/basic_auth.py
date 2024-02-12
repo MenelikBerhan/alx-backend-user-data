@@ -3,7 +3,7 @@
 """
 from api.v1.auth.auth import Auth
 from base64 import b64decode
-from typing import Union
+from typing import Tuple, Union
 
 
 class BasicAuth(Auth):
@@ -29,3 +29,15 @@ class BasicAuth(Auth):
             return b64decode(base64_authorization_header).decode('utf-8')
         except Exception:
             return None
+
+    def extract_user_credentials(
+            self,
+            decoded_base64_authorization_header: str
+            ) -> Union[Tuple[str, str], None]:
+        """Returns the user email and password from the Base64 decoded value.
+        format of Base64 decoded value: `<user_email>:<password>`"""
+        if decoded_base64_authorization_header is None or\
+            type(decoded_base64_authorization_header) != str or\
+                decoded_base64_authorization_header.count(':') != 1:
+            return None
+        return tuple(decoded_base64_authorization_header.split(':'))
