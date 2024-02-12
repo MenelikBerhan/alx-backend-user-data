@@ -3,7 +3,6 @@
 """
 from api.v1.auth.auth import Auth
 from base64 import b64decode
-from binascii import Error as DecodingError
 from typing import Union
 
 
@@ -28,5 +27,5 @@ class BasicAuth(Auth):
             return None
         try:
             return b64decode(base64_authorization_header).decode('utf-8')
-        except DecodingError:
+        except Exception:
             return None
