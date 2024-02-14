@@ -28,3 +28,13 @@ class SessionAuth(Auth):
         if session_id is None or type(session_id) != str:
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None) -> Union[User, None]:
+        """Returns a `User` instance based on a cookie value for seesion id."""
+        # get session id from cookie
+        session_id = self.session_cookie(request)
+        # get user id
+        user_id = self.user_id_for_session_id(session_id)
+        # get user
+        user = User.get(user_id)
+        return user
