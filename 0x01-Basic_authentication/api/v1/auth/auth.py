@@ -2,7 +2,6 @@
 """Class to manage API Authentication
 """
 from flask import request
-from re import match
 from typing import List, TypeVar, Union
 
 
@@ -19,7 +18,8 @@ class Auth:
             path += '/'
         # return True if path is not in excluded_paths
         for excl_path in excluded_paths:
-            if match(excl_path, path) is not None:
+            excl_path = excl_path.strip('*')
+            if path.startswith(excl_path):
                 return False
         return True
 
