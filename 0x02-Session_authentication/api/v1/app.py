@@ -35,15 +35,15 @@ def authentication_filter():
                       '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     if not auth.require_auth(request.path, excluded_paths):  # path in `exclud`
         return
-    # if auth.authorization_header(request) is None and\
-    #         auth.session_cookie(request) is None:
-    #     abort(401)
-    if getenv('AUTH_TYPE') == 'basic_auth' and\
-            auth.authorization_header(request) is None:
-        abort(401)
-    if getenv('AUTH_TYPE') == 'session_auth' and\
+    if auth.authorization_header(request) is None and\
             auth.session_cookie(request) is None:
         abort(401)
+    # if getenv('AUTH_TYPE') == 'basic_auth' and\
+    #         auth.authorization_header(request) is None:
+    #     abort(401)
+    # if getenv('AUTH_TYPE') == 'session_auth' and\
+    #         auth.session_cookie(request) is None:
+    #     abort(401)
     request.current_user = auth.current_user(request)
     if request.current_user is None:
         abort(403)
