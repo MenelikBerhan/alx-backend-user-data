@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Module of Index views
 """
-from flask import request, jsonify
+from flask import request, jsonify, session
 from api.v1.views import app_views
 from models.user import User
 from os import getenv
@@ -33,7 +33,8 @@ def session_login():
 
     from api.v1.app import auth
     # create session id and set it in responses cookie
-    seesion_id = auth.create_session(user.id)
+    session_id = auth.create_session(user.id)
     response = jsonify(user.to_json())
-    response.set_cookie(getenv('SESSION_NAME'), seesion_id)
+    response.set_cookie(getenv('SESSION_NAME'), session_id)
+    session[getenv('SESSION_NAME')] = session_id
     return response
