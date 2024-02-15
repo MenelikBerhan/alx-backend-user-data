@@ -60,6 +60,7 @@ class SessionDBAuth(SessionExpAuth):
             return False
         # check if session id is assosiated with user id
         try:
+            UserSession.load_from_file()
             user_session = UserSession.search({'session_id': session_id})[0]
         except (KeyError, IndexError):
             return False     # no user session for given session_id
