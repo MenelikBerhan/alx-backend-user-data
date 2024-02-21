@@ -40,7 +40,7 @@ class DB:
         session.commit()
         return new_user
 
-    def find_user_by(self, **args):
+    def find_user_by(self, **args) -> User:
         """Searches a user with given parameters, and returns one if found."""
         session = self._session
         user = session.query(User).filter_by(**args).first()
