@@ -43,8 +43,7 @@ class DB:
     def find_user_by(self, **args):
         """Searches a user with given parameters, and returns one if found."""
         session = self._session
-        user = session.query(User).filter_by(**args).one()
-        # user = session.query(User).filter_by(**args).first()
-        # if user is None:
-        #     raise NoResultFound
+        user = session.query(User).filter_by(**args).first()
+        if user is None:
+            raise NoResultFound
         return user
