@@ -76,7 +76,7 @@ class Auth:
 
     def get_reset_password_token(self, email: str) -> str:
         """Updates users `reset_token` attribute, and return the new token.
-        
+
         Raises:
             `ValueError` if no user with given `email` exists."""
         try:
