@@ -4,6 +4,7 @@
 from db import DB
 from bcrypt import checkpw, hashpw, gensalt
 from sqlalchemy.orm.exc import NoResultFound
+from typing import Union
 from user import User
 from uuid import uuid4
 
@@ -48,3 +49,14 @@ class Auth:
         except NoResultFound:
             return False
         return checkpw(password.encode(), user.hashed_password)
+
+    def create_session(self, email: str) -> Union[str, None]:
+        """If a user with given `email` exists, creates a
+        session_id attribute for the user and returns the id."""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        session_id = _generate_uuid()
+        self._db.update_user(user.id, session_id=session_id)
+        return session_id
