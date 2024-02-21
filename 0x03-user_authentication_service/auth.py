@@ -5,11 +5,17 @@ from db import DB
 from bcrypt import checkpw, hashpw, gensalt
 from sqlalchemy.orm.exc import NoResultFound
 from user import User
+from uuid import uuid4
 
 
 def _hash_password(password: str) -> bytes:
     """Returns a salted hash of the input password as bytes."""
     return hashpw(password.encode(), gensalt())
+
+
+def _generate_uuid() -> str:
+    """Returns a string representation of a new UUID."""
+    return str(uuid4())
 
 
 class Auth:
