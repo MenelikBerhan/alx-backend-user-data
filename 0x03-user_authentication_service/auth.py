@@ -2,7 +2,7 @@
 """User Authentication
 """
 from db import DB
-from bcrypt import hashpw, gensalt
+from bcrypt import checkpw, hashpw, gensalt
 from sqlalchemy.orm.exc import NoResultFound
 from user import User
 
@@ -34,3 +34,11 @@ class Auth:
             return new_user
         else:       # user with same `email` already exists
             raise ValueError('User {} already exists'.format(email))
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """Checks if a user with given email & password exists."""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
+        return checkpw(password.encode(), user.hashed_password)
