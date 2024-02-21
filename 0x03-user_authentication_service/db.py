@@ -3,6 +3,8 @@
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
@@ -37,3 +39,12 @@ class DB:
         session.add(new_user)
         session.commit()
         return new_user
+
+    def find_user_by(self, **args):
+        """Searches a user with given parameters, and returns one if found."""
+        session = self._session
+        user = session.query(User).filter_by(**args).one()
+        # user = session.query(User).filter_by(**args).first()
+        # if user is None:
+        #     raise NoResultFound
+        return user
