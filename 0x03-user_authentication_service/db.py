@@ -32,8 +32,8 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Adds a user with given email and password to DB
-        and return the newly created `User`."""
+        """Adds a user with given email and password
+        to DB and returns the newly created `User`."""
         session = self._session
         new_user = User(email=email, hashed_password=hashed_password)
         session.add(new_user)
@@ -41,9 +41,26 @@ class DB:
         return new_user
 
     def find_user_by(self, **args) -> User:
-        """Searches a user with given parameters, and returns one if found."""
-        session = self._session
-        user = session.query(User).filter_by(**args).first()
+        """Searches a user with given parameters, and returns one if found.
+
+        Raises:
+            `NoResultFound` if no user is found,
+            `InvalidRequestError` if `args` has an invalid user attribute."""
+        user = self._session.query(User).filter_by(**args).first()
         if user is None:
             raise NoResultFound
         return user
+
+    def update_user(self, user_id: int, **args) -> None:
+        """Updates a user of given `user_id` with parameters in `args`.
+
+        Raises:
+            `ValueError` if any key in `args` is not a valid user attribute"""
+        user = self.find_user_by(id=user_id)
+
+        # check if user has all attributes to be updated
+        if not all([hasattr(user, key) for key in args]):
+            raise ValueError
+        for key, value in args.items():     # update user attributes
+            setattr(user, key, value)   # user.__dict__.update(args) DONT WORK?
+        self._session.commit()
